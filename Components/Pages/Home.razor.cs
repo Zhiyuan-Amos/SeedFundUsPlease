@@ -6,14 +6,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 using Microsoft.CognitiveServices.Speech.Translation;
-using Microsoft.Extensions.Configuration;
 using OneOf;
 
 namespace HealthHackSgSeedFundUsPlease.Components.Pages;
 
 public partial class Home
 {
-    // TODO: Train model
     string languageKey;
     string languageEndpoint;
     string speechKey;
@@ -38,6 +36,7 @@ public partial class Home
     }
     
     private string input = "";
+    private string translated = "";
     private string intent = "";
 
     public async Task Voice()
@@ -47,6 +46,7 @@ public partial class Home
         var (original, translated) = await GetOriginalAndTranslatedAsync();
         intent = await OutputPredictionAsync();
         input = original;
+        this.translated = translated;
         return;
 
         async Task<(string Original, string Translated)> GetOriginalAndTranslatedAsync()
