@@ -39,6 +39,9 @@ public partial class Home
     private string translated = "";
     private string intent = "";
 
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
     public async Task Voice()
     {
         // TODO: allow user to set incoming language: zh-CN, ms-MY, ta-IN
@@ -47,6 +50,12 @@ public partial class Home
         intent = await OutputPredictionAsync();
         input = original;
         this.translated = translated;
+
+        if (!string.IsNullOrEmpty(intent))
+        {
+            NavigateBasedOnIntent(intent);
+        }
+
         return;
 
         async Task<(string Original, string Translated)> GetOriginalAndTranslatedAsync()
@@ -205,5 +214,23 @@ public partial class Home
 
             return conversationPrediction.TopIntent;
         }
+    }
+
+    private void NavigateBasedOnIntent(string intent)
+    {
+        switch (intent)
+        {
+            case "Appointment Booking":
+                NavigationManager.NavigateTo("/booking");
+                break;
+            case "Medicine Refill":
+                NavigationManager.NavigateTo("/checkout");
+                break;
+            default:
+                NavigationManager.NavigateTo("/");
+                break;
+        }
+
+        return;
     }
 }
