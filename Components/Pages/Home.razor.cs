@@ -39,11 +39,15 @@ public partial class Home
     private string translated = "";
     private string intent = "";
 
+    private bool isRecording = false;
+    private string recordingClass => isRecording ? "visible" : "invisible";
+
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-    public async Task Voice()
+	public async Task Voice()
     {
+        isRecording = true;
         // TODO: allow user to set incoming language: zh-CN, ms-MY, ta-IN
         var speechRecognitionLanguage = "zh-CN";
         var (original, translated) = await GetOriginalAndTranslatedAsync();
@@ -212,6 +216,7 @@ public partial class Home
                 }
             }
 
+            isRecording = false;
             return conversationPrediction.TopIntent;
         }
     }
