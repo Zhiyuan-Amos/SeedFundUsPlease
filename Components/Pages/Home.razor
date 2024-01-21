@@ -1,0 +1,11 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<button @onclick="Voice">
+    Voice
+</button>
+
+<p role="status">Input: @input</p>
+<p role="status">Intent: @intent</p>
