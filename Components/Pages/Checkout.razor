@@ -1,7 +1,12 @@
 ﻿@page "/checkout"
 
-<h3>Checkout</h3>
+@rendermode InteractiveServer
 
-@code {
-
-}
+<RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+    <RadzenColumn Size=4>
+        <RadzenButton Text="Home" Click="@NavigateHome" />
+    </RadzenColumn>
+    <RadzenColumn Size=4>
+        <h3>Checkout</h3>
+    </RadzenColumn>
+</RadzenStack>

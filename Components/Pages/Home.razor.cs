@@ -45,7 +45,7 @@ public partial class Home
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-	public async Task Voice()
+    public async Task Voice()
     {
         isRecording = true;
         // TODO: allow user to set incoming language: zh-CN, ms-MY, ta-IN
