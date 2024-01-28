@@ -2,6 +2,7 @@ using Azure;
 using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Core.Serialization;
+using HealthHackSgSeedFundUsPlease.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
@@ -21,6 +22,7 @@ public partial class Home
 
     [Inject] private ILogger<Home> Logger { get; set; }
     [Inject] public NavigationManager NavigationManager { get; set; }
+    [Inject] public Instance Instance { get; set; }
 
     public Home()
     {
