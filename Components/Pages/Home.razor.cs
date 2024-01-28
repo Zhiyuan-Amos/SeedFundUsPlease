@@ -20,6 +20,7 @@ public partial class Home
     string cluDeploymentName;
 
     [Inject] private ILogger<Home> Logger { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
 
     public Home()
     {
