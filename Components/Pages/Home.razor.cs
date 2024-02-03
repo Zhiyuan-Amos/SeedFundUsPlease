@@ -2,6 +2,7 @@ using Azure;
 using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Core.Serialization;
+using HealthHackSgSeedFundUsPlease.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
@@ -20,6 +21,8 @@ public partial class Home
     string cluDeploymentName;
 
     [Inject] private ILogger<Home> Logger { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
+    [Inject] public Instance Instance { get; set; }
 
     public Home()
     {
@@ -39,14 +42,27 @@ public partial class Home
     private string translated = "";
     private string intent = "";
 
+    private bool isRecording = false;
+    private string recordingClass => isRecording ? "visible" : "invisible";
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
     public async Task Voice()
     {
+        isRecording = true;
         // TODO: allow user to set incoming language: zh-CN, ms-MY, ta-IN
         var speechRecognitionLanguage = "zh-CN";
         var (original, translated) = await GetOriginalAndTranslatedAsync();
         intent = await OutputPredictionAsync();
         input = original;
         this.translated = translated;
+
+        if (!string.IsNullOrEmpty(intent))
+        {
+            NavigateBasedOnIntent(intent);
+        }
+
         return;
 
         async Task<(string Original, string Translated)> GetOriginalAndTranslatedAsync()
@@ -203,7 +219,26 @@ public partial class Home
                 }
             }
 
+            isRecording = false;
             return conversationPrediction.TopIntent;
         }
+    }
+
+    private void NavigateBasedOnIntent(string intent)
+    {
+        switch (intent)
+        {
+            case "Appointment Booking":
+                NavigationManager.NavigateTo("/booking");
+                break;
+            case "Medicine Refill":
+                NavigationManager.NavigateTo("/checkout");
+                break;
+            default:
+                NavigationManager.NavigateTo("/");
+                break;
+        }
+
+        return;
     }
 }

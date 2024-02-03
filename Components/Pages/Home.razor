@@ -3,10 +3,38 @@
 
 <PageTitle>Home</PageTitle>
 
-<button @onclick="Voice">
-    Voice
-</button>
+<RadzenCard class="my-4">
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="4px" Wrap="FlexWrap.Wrap">
+        <RadzenColumn Size="4">
+            Input:
+        </RadzenColumn>
+        <RadzenColumn>
+            @input
+        </RadzenColumn>
+    </RadzenStack>
+</RadzenCard>
+<RadzenCard class="my-4">
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="4px" Wrap="FlexWrap.Wrap">
+        <RadzenColumn Size="4">
+            Translated:
+        </RadzenColumn>
+        <RadzenColumn>
+            @translated
+        </RadzenColumn>
+    </RadzenStack>
+</RadzenCard>
+<RadzenCard class="my-4">
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="4px" Wrap="FlexWrap.Wrap">
+        <RadzenColumn Size="4">
+            Intent:
+        </RadzenColumn>
+        <RadzenColumn>
+            @intent
+        </RadzenColumn>
+    </RadzenStack>
+</RadzenCard>
 
-<p role="status">Input: @input</p>
-<p role="status">Translated: @translated</p>
-<p role="status">Intent: @intent</p>
+<RadzenStack Gap="1rem" class="rz-m-12">
+    <RadzenButton Text="Voice" Click="@Voice" />
+    <RadzenProgressBar class="@recordingClass" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+</RadzenStack>
